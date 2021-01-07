@@ -1,0 +1,16 @@
+version: "2.4"
+
+services:
+  db:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=sample
+      - MYSQL_USER=sample
+      - MYSQL_PASSWORD=sample
+    healthcheck:
+      test: ["CMD-SHELL", "mysqlshow -u root -proot"]
+      interval: "5s"
+      retries: 10
