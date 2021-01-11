@@ -1,0 +1,21 @@
+spring:
+  boot:
+    enableautoconfiguration: true
+  datasource:
+    url: jdbc:mysql://localhost:4306/sample
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: local
+    password: local
+    sql-script-encoding: utf-8
+  jpa:
+    database: MYSQL
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL57Dialect
+        jdbc:
+          batch_size: 100
+server:
+  port: 8080
+  shutdown: graceful

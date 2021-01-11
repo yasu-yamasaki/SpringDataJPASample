@@ -18,25 +18,13 @@ plugins {
     kotlin("jvm") version "1.4.21"
     kotlin("plugin.spring") version "1.4.21"
     kotlin("plugin.jpa") version "1.4.21"
-    id("io.spring.dependency-management") version "1.0.10.RELEASE"
+    id("org.springframework.boot") version "2.3.7.RELEASE"
     jacoco
     id("org.flywaydb.flyway") version "6.4.4"
 }
 
 jacoco {
     toolVersion = "0.8.6"
-}
-
-flyway {
-    url = "jdbc:mysql://127.0.0.1:3306/sample"
-    user = "sample"
-    password = "sample"
-    locations = arrayOf(
-        "db/migrations",
-        "db/seeds"
-    )
-        .map { "filesystem:/${file(it).absolutePath}" }
-        .toTypedArray()
 }
 
 dependencies {
@@ -81,4 +69,27 @@ tasks.create("integrationTest", Test::class.java) {
         showStackTraces = true
         showStandardStreams = false
     }
+}
+
+tasks.create("dbMigrateIt", org.flywaydb.gradle.task.FlywayMigrateTask::class.java) {
+    url = "jdbc:mysql://127.0.0.1:3306/sample"
+    user = "sample"
+    password = "sample"
+    locations = arrayOf(
+        "db/migrations"
+    )
+        .map { "filesystem:/${file(it).absolutePath}" }
+        .toTypedArray()
+}
+
+tasks.create("dbMigrateLocal", org.flywaydb.gradle.task.FlywayMigrateTask::class.java) {
+    url = "jdbc:mysql://127.0.0.1:4306/sample"
+    user = "local"
+    password = "local"
+    locations = arrayOf(
+        "db/migrations",
+        "db/seeds/local"
+    )
+        .map { "filesystem:/${file(it).absolutePath}" }
+        .toTypedArray()
 }

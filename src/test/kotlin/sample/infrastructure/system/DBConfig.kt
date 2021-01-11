@@ -41,7 +41,7 @@ class DBConfig {
             )
             setPackagesToScan(
                 *listOfNotNull(
-                    "com.finatext.draco37.infrastructure.common",
+                    "sample.infrastructure.system",
                     packages
                 ).toTypedArray()
             )
@@ -52,10 +52,9 @@ class DBConfig {
     }
 
     @Bean(name = ["transactionManager"])
-    fun transactionManager(entityManagerFactory: EntityManagerFactory): TransactionManager {
+    fun transactionManager(emf: EntityManagerFactory): TransactionManager {
         return JpaTransactionManager().apply {
-            setEntityManagerFactory(entityManagerFactory)
-            jpaPropertyMap
+            entityManagerFactory = emf
         }
     }
 }

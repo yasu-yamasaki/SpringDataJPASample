@@ -16,5 +16,10 @@ init:
 test: init
 	$(DOCKER_COMPOSE) -f docker-compose.it.yml up --detach
 	sleep 20
-	./gradlew test flywayMigrate integrationTest
+	./gradlew test dbMigrateIt integrationTest
 	$(DOCKER_COMPOSE) -f docker-compose.it.yml down -v
+
+init/local: init
+	$(DOCKER_COMPOSE) -f docker-compose.yml up --detach
+	sleep 20
+	./gradlew dbMigrateLocal
